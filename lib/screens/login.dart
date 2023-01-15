@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:me_empresta_ai/models/LoginData.dart';
 
-
 class LoginWidget extends StatelessWidget {
   const LoginWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Login",
+        appBar: AppBar(
+          title: Text(
+            "Login",
+          ),
         ),
-       ),
-      body: const LoginFields()
-    );
+        body: const LoginFields());
   }
 }
 
@@ -71,11 +69,10 @@ class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
       validator: widget.validator,
       onFieldSubmitted: widget.onFieldSubmitted,
       decoration: InputDecoration(
-        filled: true,
-        hintText: widget.hintText,
-        labelText: widget.labelText,
-        helperText: widget.helperText
-      ),
+          filled: true,
+          hintText: widget.hintText,
+          labelText: widget.labelText,
+          helperText: widget.helperText),
     );
   }
 }
@@ -142,7 +139,7 @@ class LoginFieldsState extends State<LoginFields> with RestorationMixin {
                 decoration: InputDecoration(
                   filled: true,
                   hintText: "Seu endereço de e-mail",
-                  labelText:"Email",
+                  labelText: "Email",
                 ),
                 keyboardType: TextInputType.emailAddress,
                 onSaved: (value) {
@@ -178,11 +175,10 @@ class LoginFieldsState extends State<LoginFields> with RestorationMixin {
     );
   }
 
-    void _handleSubmitted() {
+  void _handleSubmitted() {
     final form = _formKey.currentState!;
     if (!form.validate()) {
-      _autoValidateModeIndex.value =
-          AutovalidateMode.always.index;
+      _autoValidateModeIndex.value = AutovalidateMode.always.index;
     } else {
       form.save();
     }
