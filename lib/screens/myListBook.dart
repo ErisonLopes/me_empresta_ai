@@ -6,6 +6,8 @@ import 'package:me_empresta_ai/screens/add.dart';
 import 'package:me_empresta_ai/utils/custom_styles.dart';
 import 'package:me_empresta_ai/utils/custom_widgets.dart';
 
+import '../repositories/bookRepository.dart';
+
 class MyBooksWidget extends StatefulWidget {
   const MyBooksWidget({Key? key}) : super(key: key);
 
@@ -17,7 +19,9 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   final title = const Text("Meus Livros");
   final addPage = BookFormWidget();
   BookDao? bookDao;
-  List<Book> books = [];
+
+  final BookRepository? _repository = BookRepository();
+  List<Book> books = <Book>[];
 
   @override
   void initState() {
@@ -26,23 +30,16 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   }
 
   _getBooksById(int id) async {
-    if (bookDao == null) {
-      final database = await $FloorAppDatabase
-          .databaseBuilder("book_floor_database.db")
-          .build();
-      bookDao = database.bookDao;
-    }
-    if (bookDao != null) {
-      final result = await bookDao!.getBookAll();
-      setState(() {
-        books = result;
-      });
-    }
+    final result = await _repository!.getBooksByUserId(id);
+
+    setState(() {
+      books = result;
+    });
   }
 
   _insertBook(Book book) async {
-    if (bookDao != null) {
-      await bookDao!.insertBook(book);
+    if (book != null) {
+      await _repository!.setBook(book);
       await _getBooksById(book.userId);
     }
   }

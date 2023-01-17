@@ -6,7 +6,7 @@ abstract class BookDao {
   @Query("SELECT * FROM book where userId = ?")
   Future<List<Book>> getBookByUser(int userId);
 
-  @Query("SELECT * FROM book")
+  @Query("SELECT * FROM Book")
   Future<List<Book>> getBookAll();
 
   @insert

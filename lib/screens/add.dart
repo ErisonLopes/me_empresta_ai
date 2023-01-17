@@ -37,8 +37,12 @@ class BookFormWidget extends StatelessWidget {
                     child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            final book = Book(_nameController.text,
-                                _descriptionController.text, 0, 0, 0);
+                            final book = Book(
+                                _nameController.text,
+                                _descriptionController.text, 
+                                1, 
+                                1, 
+                                1);
                             Navigator.pop(context, book);
                           }
                         },
