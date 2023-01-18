@@ -25,9 +25,17 @@ class DB {
     await db.execute(_user);
     await db.execute(_book);
     await db.insert('user', {
+      'id': 1,
       'username': 'erisonson',
       'name': 'Erison Lopes',
       'email': 'erison.lopes.souza@gmail.com.br',
+      'password': 'empresta@1234'
+    });
+    await db.insert('user', {
+      'id': 2,
+      'username': 'guidorosario',
+      'name': 'Guilherme Almeida',
+      'email': 'gui.almeida@gmail.com.br',
       'password': 'empresta@1234'
     });
     await db.insert('book', {
@@ -36,6 +44,14 @@ class DB {
       'author': 'não sei',
       'loan': 1,
       'userId': 1,
+      'userLoanId': 2
+    });
+    await db.insert('book', {
+      'name': 'É assim que acaba vol 2',
+      'description': 'Lorem Ipsum',
+      'author': 'não sei',
+      'loan': 1,
+      'userId': 2,
       'userLoanId': 1
     });
   }

@@ -2,35 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:me_empresta_ai/floor/daos/book_dao.dart';
 import 'package:me_empresta_ai/floor/database/app_database.dart';
 import 'package:me_empresta_ai/models/book.dart';
+import 'package:me_empresta_ai/models/user.dart';
+import 'package:me_empresta_ai/repositories/userRepository.dart';
 import 'package:me_empresta_ai/screens/bookAdd.dart';
 import 'package:me_empresta_ai/utils/custom_styles.dart';
 import 'package:me_empresta_ai/utils/custom_widgets.dart';
 
 import '../repositories/bookRepository.dart';
 
-class MyBooksWidget extends StatefulWidget {
-  const MyBooksWidget({Key? key}) : super(key: key);
+class MyFriendBooksWidget extends StatefulWidget {
+  const MyFriendBooksWidget({Key? key}) : super(key: key);
 
   @override
-  State<MyBooksWidget> createState() => _MyBooksWidgetState();
+  State<MyFriendBooksWidget> createState() => _MyFriendBooksWidgetState();
 }
 
-class _MyBooksWidgetState extends State<MyBooksWidget> {
-  final title = const Text("Meus Livros");
+class _MyFriendBooksWidgetState extends State<MyFriendBooksWidget> {
+  final title = const Text("Livros de");
   final addPage = BookFormWidget();
   BookDao? bookDao;
 
   final BookRepository? _repository = BookRepository();
+  final UserRepository? _userRepository = UserRepository();
   List<Book> books = <Book>[];
+  User user = User("", "", "", "");
 
   @override
   void initState() {
     super.initState();
-    _getBooksById(2);
+    _getBooksById(1);
+    _getUser(1);
   }
 
   _getBooksById(int id) async {
-    final result = await _repository!.getBooksByUserId(2);
+    final result = await _repository!.getBooksByUserId(id);
 
     setState(() {
       books = result;
@@ -40,8 +45,15 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   _insertBook(Book book) async {
     if (book != null) {
       await _repository!.setBook(book);
-      await _getBooksById(1);
+      await _getBooksById(book.userId);
     }
+  }
+
+  _getUser(int id) async {
+    final result = await _userRepository!.getUserById(id);
+    setState(() {
+      user = result;
+    });
   }
 
   _deleteBook(Book book) async {
@@ -54,18 +66,7 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: title,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => addPage))
-                    .then((book) => _insertBook(book));
-              },
-              icon: addIcon)
-        ],
-      ),
+      appBar: AppBar(title: Text("Livros de " + user.name.split(' ').first)),
       body: ListView.separated(
           itemBuilder: (context, index) => _buildItem(index),
           separatorBuilder: (context, index) => dividerList(),

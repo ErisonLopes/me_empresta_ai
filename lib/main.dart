@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:me_empresta_ai/screens/login.dart';
+import 'package:me_empresta_ai/screens/myFriendListBook.dart';
 import 'package:me_empresta_ai/screens/myListBook.dart';
 
 void main() {
@@ -21,8 +22,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        //'/': (context) => const LoginWidget(),
-        '/': (context) => const MyBooksWidget()
+        // '/': (context) => const LoginWidget(),
+        //'/': (context) => const MyBooksWidget()
+        '/': (context) => const MyFriendBooksWidget()
       },
     );
   }
