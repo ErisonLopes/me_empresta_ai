@@ -80,22 +80,22 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
     return "disponivel";
   }
 
+  Text subTitle(Book book) {
+    return Text(book.description + " " + book.author + "  " + loan(book.loan));
+  }
+
   _buildItem(int index) {
     final book = books[index];
     return Padding(
         padding: cardPadding,
         child: Container(
-            decoration: cardBoxDecoration,
-            child: ListTile(
+          decoration: cardBoxDecoration,
+          child: ListTile(
               title: Text(book.name),
-              subtitle: ListTile(
-                  title: Text(book.description),
-                  subtitle: Text(
-                    loan(book.loan),
-                  ),
-                  onLongPress: () {
-                    _deleteBook(book);
-                  }),
-            )));
+              subtitle: subTitle(book),
+              onLongPress: () {
+                _deleteBook(book);
+              }),
+        ));
   }
 }

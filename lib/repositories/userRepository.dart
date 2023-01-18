@@ -1,13 +1,9 @@
-import 'dart:html';
-
 import 'package:me_empresta_ai/database/db.dart';
-import 'package:me_empresta_ai/models/book.dart';
 import 'package:me_empresta_ai/models/user.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UserRepository {
   late Database db;
-  List<Book> books = [];
   List<User> users = [];
 
   UserRepository() {

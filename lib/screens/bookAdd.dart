@@ -33,6 +33,11 @@ class BookFormWidget extends StatelessWidget {
                       label: "Descrição",
                       controller: _descriptionController,
                       validationMsg: "Insira o descrição do livro"),
+                  DefaultInputFormWidget(
+                      placeholder: "Informe o autor",
+                      label: "Autor",
+                      controller: _authorController,
+                      validationMsg: "Insira o nome do author"),
                   Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: ElevatedButton(
@@ -42,7 +47,7 @@ class BookFormWidget extends StatelessWidget {
                                 _nameController.text,
                                 _descriptionController.text,
                                 _authorController.text,
-                                1,
+                                0,
                                 1,
                                 1);
                             Navigator.pop(context, book);
