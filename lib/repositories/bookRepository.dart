@@ -19,14 +19,15 @@ class BookRepository {
 
     List<Map<String, dynamic>> bookMap = await db.query('book', limit: 1);
 
-    books = List.generate(bookMap.length, (index)  {
+    books = List.generate(bookMap.length, (index) {
       return Book(
-        bookMap[index]['name'], 
-        bookMap[index]['description'], 
-        bookMap[index]['loan'], 
-        bookMap[index]['userId'], 
-        bookMap[index]['userLoanId'],
-        id: bookMap[index]['id']);
+          bookMap[index]['name'],
+          bookMap[index]['description'],
+          bookMap[index]['author'],
+          bookMap[index]['loan'],
+          bookMap[index]['userId'],
+          bookMap[index]['userLoanId'],
+          id: bookMap[index]['id']);
     });
 
     return books;
@@ -38,14 +39,15 @@ class BookRepository {
     List<Map<String, dynamic>> bookMap =
         await db.rawQuery('SELECT * FROM book WHERE userId == $id');
 
-    books = List.generate(bookMap.length, (index)  {
+    books = List.generate(bookMap.length, (index) {
       return Book(
-        bookMap[index]['name'], 
-        bookMap[index]['description'], 
-        bookMap[index]['loan'], 
-        bookMap[index]['userId'], 
-        bookMap[index]['userLoanId'],
-        id: bookMap[index]['id']);
+          bookMap[index]['name'],
+          bookMap[index]['description'],
+          bookMap[index]['author'],
+          bookMap[index]['loan'],
+          bookMap[index]['userId'],
+          bookMap[index]['userLoanId'],
+          id: bookMap[index]['id']);
     });
 
     return books;
@@ -57,10 +59,10 @@ class BookRepository {
     db.insert('book', {
       'name': book.name,
       'description': book.description,
+      'author': book.author,
       'loan': book.loan,
       'userId': book.userId,
       'userLoanId': book.userLoanId
     });
   }
-
 }

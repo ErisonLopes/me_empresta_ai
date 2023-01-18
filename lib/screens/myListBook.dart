@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:me_empresta_ai/floor/daos/book_dao.dart';
 import 'package:me_empresta_ai/floor/database/app_database.dart';
 import 'package:me_empresta_ai/models/book.dart';
-import 'package:me_empresta_ai/screens/add.dart';
+import 'package:me_empresta_ai/screens/bookAdd.dart';
 import 'package:me_empresta_ai/utils/custom_styles.dart';
 import 'package:me_empresta_ai/utils/custom_widgets.dart';
 
@@ -30,7 +30,7 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   }
 
   _getBooksById(int id) async {
-    final result = await _repository!.getBooksByUserId(id);
+    final result = await _repository!.getBooksByUserId(1);
 
     setState(() {
       books = result;
@@ -40,7 +40,7 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   _insertBook(Book book) async {
     if (book != null) {
       await _repository!.setBook(book);
-      await _getBooksById(book.userId);
+      await _getBooksById(1);
     }
   }
 

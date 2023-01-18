@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        //  '/': (context) => const LoginWidget(),
-        '/': (context) => const MyBooksWidget()
+        '/': (context) => const LoginWidget(),
+        '/books': (context) => const MyBooksWidget()
       },
     );
   }

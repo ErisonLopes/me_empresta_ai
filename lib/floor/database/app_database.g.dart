@@ -97,7 +97,7 @@ class _$AppDatabase extends AppDatabase {
   String get _user => '''
 CREATE TABLE IF NOT EXIST user(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_name TEXT NOT NULL, 
+  userName TEXT NOT NULL, 
   name TEXT NOT NULL,
   email  TEXT NOT NULL);''';
 
@@ -107,10 +107,10 @@ CREATE TABLE IF NOT EXISTS book (
   name TEXT NOT NULL,
   description TEXT NOT NULL,
   loan INTEGER,
-  user_id INTEGER NOT NULL,
-  user_loan_id INTEGER, PRIMARY KEY (id),
-  FOREIGN KEY(user_id) REFERENCES User(id), 
-  FOREIGN KEY(user_loan_id) REFERENCES User(id));''';
+  userId INTEGER NOT NULL,
+  userLoanId INTEGER, PRIMARY KEY (id),
+  FOREIGN KEY(userId) REFERENCES User(id), 
+  FOREIGN KEY(userLoanId) REFERENCES User(id));''';
 
   @override
   BookDao get bookDao {
@@ -134,7 +134,8 @@ class _$BookDao extends BookDao {
             (Book item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'description': item.description
+                  'description': item.description,
+                  'author': item.author
                 }),
         _bookDeletionAdapter = DeletionAdapter(
             database,
@@ -143,7 +144,8 @@ class _$BookDao extends BookDao {
             (Book item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'description': item.description
+                  'description': item.description,
+                  'author': item.author
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -162,9 +164,10 @@ class _$BookDao extends BookDao {
         mapper: (Map<String, Object?> row) => Book(
             row['name'] as String,
             row['description'] as String,
+            row['author'] as String,
             row['loan'] as int,
-            row['user_id'] as int,
-            row['user_loan_id'] as int?,
+            row['userId'] as int,
+            row['userLoanId'] as int?,
             id: row['id'] as int?));
   }
 
@@ -174,9 +177,10 @@ class _$BookDao extends BookDao {
         mapper: (Map<String, Object?> row) => Book(
             row['name'] as String,
             row['description'] as String,
+            row['author'] as String,
             row['loan'] as int,
-            row['user_id'] as int,
-            row['user_loan_id'] as int?,
+            row['userId'] as int,
+            row['userLoanId'] as int?,
             id: row['id'] as int?));
   }
 
@@ -203,7 +207,8 @@ class _$UserDao extends UserDao {
                   'id': item.id,
                   'name': item.name,
                   'email': item.email,
-                  'username': item.username
+                  'username': item.username,
+                  'password': item.password
                 }),
         _userDeletionAdapter = DeletionAdapter(
             database,
@@ -213,7 +218,8 @@ class _$UserDao extends UserDao {
                   'id': item.id,
                   'name': item.name,
                   'email': item.email,
-                  'username': item.username
+                  'username': item.username,
+                  'password': item.password
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -229,16 +235,22 @@ class _$UserDao extends UserDao {
   @override
   Future<User?> getUserByEmail(String email) async {
     return _queryAdapter.query('SELECT * FROM user where email = ?',
-        mapper: (Map<String, Object?> row) => User(row['user_name'] as String,
-            row['name'] as String, row['email'] as String,
+        mapper: (Map<String, Object?> row) => User(
+            row['user_name'] as String,
+            row['name'] as String,
+            row['email'] as String,
+            row['password'] as String,
             id: row['id'] as int?));
   }
 
   @override
   Future<User?> getUserByUserName(String email) async {
     return _queryAdapter.query('SELECT * FROM user where userName = ?',
-        mapper: (Map<String, Object?> row) => User(row['user_name'] as String,
-            row['name'] as String, row['email'] as String,
+        mapper: (Map<String, Object?> row) => User(
+            row['user_name'] as String,
+            row['name'] as String,
+            row['email'] as String,
+            row['password'] as String,
             id: row['id'] as int?));
   }
 

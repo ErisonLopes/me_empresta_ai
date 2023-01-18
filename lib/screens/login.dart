@@ -1,17 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:me_empresta_ai/models/LoginData.dart';
+import 'package:me_empresta_ai/models/user.dart';
+import 'package:me_empresta_ai/repositories/userRepository.dart';
+import 'package:me_empresta_ai/screens/userAdd.dart';
+import 'package:me_empresta_ai/utils/custom_widgets.dart';
 
-class LoginWidget extends StatelessWidget {
+class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
+  @override
+  State<LoginWidget> createState() => _LoginWidgetState();
+}
+
+class _LoginWidgetState extends State<LoginWidget> {
+  final title = const Text("Login");
+  final addUser = UserFormWidget();
+  final UserRepository? _repository = UserRepository();
+
+  _insertUser(User user) async {
+    if (user != null) {
+      await _repository!.insertUser(user);
+      await _repository!.getUserByEmail(user.username);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final addUser = UserFormWidget();
+
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Login",
-          ),
+          title: title,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => addUser))
+                      .then((book) => _insertUser(book));
+                },
+                icon: addIcon)
+          ],
         ),
         body: const LoginFields());
   }
