@@ -8,7 +8,7 @@ class DB {
   static Database? _database;
 
   get database async {
-    if (_database !=  null) return _database;
+    if (_database != null) return _database;
 
     return await _initDatabase();
   }
@@ -18,27 +18,39 @@ class DB {
       join(await getDatabasesPath(), 'meEmprestaAi.db'),
       version: 1,
       onCreate: _onCreate,
-
     );
   }
 
   _onCreate(db, version) async {
     await db.execute(_user);
     await db.execute(_book);
-    await db.insert('user', {'username': 'erisonson', 'name' : 'Erison Lopes', 'email': 'erison.lopes.souza@gmail.com.br'});
-    await db.insert('book', {'name': 'É assim que acaba', 'description': 'Lorem Ipsum', 'author': 'não sei', 'loan': 1, 'userId': 1, 'userLoanId': 1});
+    await db.insert('user', {
+      'username': 'erisonson',
+      'name': 'Erison Lopes',
+      'email': 'erison.lopes.souza@gmail.com.br',
+      'password': 'empresta@1234'
+    });
+    await db.insert('book', {
+      'name': 'É assim que acaba',
+      'description': 'Lorem Ipsum',
+      'author': 'não sei',
+      'loan': 1,
+      'userId': 1,
+      'userLoanId': 1
+    });
   }
 
-  String get _user =>  '''
+  String get _user => '''
   CREATE TABLE user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT,
     name TEXT,
-    email TEXT
+    email TEXT,
+    password TEXT
   );
 ''';
 
-  String get _book =>  '''
+  String get _book => '''
   CREATE TABLE book (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
