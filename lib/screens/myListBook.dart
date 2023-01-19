@@ -9,13 +9,21 @@ import 'package:me_empresta_ai/utils/custom_widgets.dart';
 import '../repositories/bookRepository.dart';
 
 class MyBooksWidget extends StatefulWidget {
-  const MyBooksWidget({Key? key}) : super(key: key);
+  final int userId;
+
+  const MyBooksWidget({Key? key, required this.userId}) : super(key: key);
 
   @override
-  State<MyBooksWidget> createState() => _MyBooksWidgetState();
+  State<MyBooksWidget> createState() => _MyBooksWidgetState(userId);
 }
 
 class _MyBooksWidgetState extends State<MyBooksWidget> {
+  late int userId;
+
+  _MyBooksWidgetState(userId) {
+    this.userId = userId;
+  }
+
   final title = const Text("Meus Livros");
   final addPage = BookFormWidget();
   BookDao? bookDao;
@@ -26,11 +34,11 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   @override
   void initState() {
     super.initState();
-    _getBooksById(1);
+    _getBooksById(userId);
   }
 
   _getBooksById(int id) async {
-    final result = await _repository!.getBooksByUserId(1);
+    final result = await _repository!.getBooksByUserId(userId);
 
     setState(() {
       books = result;
@@ -50,7 +58,7 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   _insertBook(Book book) async {
     if (book != null) {
       await _repository!.setBook(book);
-      await _getBooksById(1);
+      await _getBooksById(userId);
     }
   }
 

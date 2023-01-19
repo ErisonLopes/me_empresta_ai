@@ -27,7 +27,12 @@ class UserRepository {
           userMap[index]["email"], userMap[index]["password"],
           id: userMap[index]["id"]);
     });
-    return users.single;
+
+    if (users.isEmpty) {
+      return null;
+    }
+
+    return users.first;
   }
 
   getUserById(int id) async {

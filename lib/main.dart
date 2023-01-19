@@ -18,13 +18,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       initialRoute: '/',
       routes: {
-        // '/': (context) => const LoginWidget(),
-        '/': (context) => const MyBooksWidget()
-        //'/': (context) => const MyFriendBooksWidget()
+        '/': (context) => const LoginWidget(),
+        //'/': (context) => const MyBooksWidget()
       },
     );
   }
