@@ -41,7 +41,7 @@ class UserRepository {
           userMap[index]["email"], userMap[index]["password"],
           id: userMap[index]["id"]);
     });
-    return users.single;
+    return users.first;
   }
 
   insertUser(User user) async {

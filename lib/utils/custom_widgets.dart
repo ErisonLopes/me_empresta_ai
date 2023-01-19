@@ -11,3 +11,4 @@ Widget buildSvgIcon(String path) =>
 
 const addIcon = Icon(Icons.add);
 const salvarText = Text("Salvar");
+const loanText = Text("Emprestar");

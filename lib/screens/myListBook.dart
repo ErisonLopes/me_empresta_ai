@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:me_empresta_ai/floor/daos/book_dao.dart';
-import 'package:me_empresta_ai/floor/database/app_database.dart';
 import 'package:me_empresta_ai/models/book.dart';
 import 'package:me_empresta_ai/screens/bookAdd.dart';
+import 'package:me_empresta_ai/screens/booksDescription.dart';
 import 'package:me_empresta_ai/utils/custom_styles.dart';
 import 'package:me_empresta_ai/utils/custom_widgets.dart';
 
@@ -26,15 +26,25 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   @override
   void initState() {
     super.initState();
-    _getBooksById(2);
+    _getBooksById(1);
   }
 
   _getBooksById(int id) async {
-    final result = await _repository!.getBooksByUserId(2);
+    final result = await _repository!.getBooksByUserId(1);
 
     setState(() {
       books = result;
     });
+  }
+
+  mostrarDetalhes(Book book) {
+    print(book.author);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => BooksDescriptionWidget(book: book),
+      ),
+    );
   }
 
   _insertBook(Book book) async {
@@ -83,7 +93,7 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   Text subTitle(Book book) {
     return Text("Descrição: " +
         book.description +
-        "  Autor: " +
+        " Autor: " +
         book.author +
         "  " +
         loan(book.loan));
@@ -98,8 +108,8 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
           child: ListTile(
               title: Text(book.name),
               subtitle: subTitle(book),
-              onLongPress: () {
-                _deleteBook(book);
+              onTap: () {
+                mostrarDetalhes(book);
               }),
         ));
   }
