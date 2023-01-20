@@ -68,14 +68,15 @@ class _BooksDescriptionWidgetState extends State<BooksDescriptionWidget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(width: 10),
-                    Text(
+                    Flexible(
+                    child:Text(
                       widget.book.description,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         letterSpacing: -1,
                         color: Colors.blue[800],
-                      ),
+                      )),
                     ),
                   ])),
           Padding(
