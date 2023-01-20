@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:me_empresta_ai/models/LoginData.dart';
 import 'package:me_empresta_ai/models/user.dart';
 import 'package:me_empresta_ai/repositories/userRepository.dart';
+import 'package:me_empresta_ai/screens/homeScreen.dart';
 import 'package:me_empresta_ai/screens/userAdd.dart';
 import 'package:me_empresta_ai/utils/custom_widgets.dart';
 
@@ -86,7 +87,7 @@ class LoginFieldsState extends State<LoginFields> with RestorationMixin {
     registerForRestoration(_autoValidateModeIndex, 'autovalidate_mode');
   }
 
-    _insertUser(User user) async {
+  _insertUser(User user) async {
     if (user != null) {
       await _repository!.insertUser(user);
       await _repository!.getUserByEmail(user.username);
@@ -211,14 +212,20 @@ class LoginFieldsState extends State<LoginFields> with RestorationMixin {
     User? user = await _repository!.getUserByEmail(email);
 
     if (user == null) {
-      _showDialogError("Usuário não encontrado. Verifique o e-mail e tente novamente.");    
-      return;  
+      _showDialogError(
+          "Usuário não encontrado. Verifique o e-mail e tente novamente.");
+      return;
     }
 
     if (password != user.password) {
-      return _showDialogError("Senha incorreta. Verifique e tente novamente."); 
+      return _showDialogError("Senha incorreta. Verifique e tente novamente.");
     }
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MyBooksWidget(userId: user.id!,)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomePage(
+                  userId: user.id!,
+                )));
   }
 }

@@ -3,9 +3,16 @@ import 'package:me_empresta_ai/utils/custom_widgets.dart';
 import 'package:me_empresta_ai/widgets/input_form.dart';
 import 'package:flutter/material.dart';
 
-class BookFormWidget extends StatelessWidget {
-  BookFormWidget({Key? key}) : super(key: key);
+class BookFormWidget extends StatefulWidget {
+  final int userId;
 
+  const BookFormWidget({Key? key, required this.userId}) : super(key: key);
+
+  @override
+  _BookFormWidgetState createState() => _BookFormWidgetState();
+}
+
+class _BookFormWidgetState extends State<BookFormWidget> {
   final title = const Text("Novo Livro");
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -48,7 +55,7 @@ class BookFormWidget extends StatelessWidget {
                                 _descriptionController.text,
                                 _authorController.text,
                                 0,
-                                1,
+                                widget.userId,
                                 1);
                             Navigator.pop(context, book);
                           }

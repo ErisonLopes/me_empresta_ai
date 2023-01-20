@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:me_empresta_ai/screens/login.dart';
 import 'package:me_empresta_ai/screens/myFriendListBook.dart';
 import 'package:me_empresta_ai/screens/myListBook.dart';
+import 'package:me_empresta_ai/screens/homeScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Me Empresta Ai',
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),

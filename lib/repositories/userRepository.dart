@@ -49,6 +49,20 @@ class UserRepository {
     return users.first;
   }
 
+  getUsers(int id) async {
+    db = await DB.instance.database;
+
+    List<Map<String, dynamic>> userMap =
+        await db.query('user', where: "id <> ?", whereArgs: [id]);
+
+    users = List.generate(userMap.length, (index) {
+      return User(userMap[index]["username"], userMap[index]["name"],
+          userMap[index]["email"], userMap[index]["password"],
+          id: userMap[index]["id"]);
+    });
+    return users;
+  }
+
   insertUser(User user) async {
     db = await DB.instance.database;
 
