@@ -52,12 +52,46 @@ class _BooksDescriptionWidgetState extends State<BooksDescriptionWidget> {
                   children: [
                     Container(width: 10),
                     Text(
-                      widget.book.description,
+                      "Descrição",
                       style: TextStyle(
-                        fontSize: 26,
+                        fontSize: 22,
                         fontWeight: FontWeight.w600,
                         letterSpacing: -1,
-                        color: Colors.grey[800],
+                        color: Colors.black,
+                      ),
+                    ),
+                  ])),
+          Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(width: 10),
+                    Text(
+                      widget.book.description,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: -1,
+                        color: Colors.blue[800],
+                      ),
+                    ),
+                  ])),
+          Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(width: 10),
+                    Text(
+                      "Autor",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: -1,
+                        color: Colors.black,
                       ),
                     ),
                   ])),
@@ -71,10 +105,10 @@ class _BooksDescriptionWidgetState extends State<BooksDescriptionWidget> {
                     Text(
                       widget.book.author,
                       style: TextStyle(
-                        fontSize: 26,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                         letterSpacing: -1,
-                        color: Colors.grey[800],
+                        color: Colors.blue[800],
                       ),
                     ),
                   ])),
