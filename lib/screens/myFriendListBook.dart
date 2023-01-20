@@ -5,13 +5,17 @@ import 'package:me_empresta_ai/models/book.dart';
 import 'package:me_empresta_ai/models/user.dart';
 import 'package:me_empresta_ai/repositories/userRepository.dart';
 import 'package:me_empresta_ai/screens/bookAdd.dart';
+import 'package:me_empresta_ai/screens/booksDescription.dart';
+import 'package:me_empresta_ai/screens/homeScreen.dart';
 import 'package:me_empresta_ai/utils/custom_styles.dart';
 import 'package:me_empresta_ai/utils/custom_widgets.dart';
 
 import '../repositories/bookRepository.dart';
 
 class MyFriendBooksWidget extends StatefulWidget {
-  const MyFriendBooksWidget({Key? key}) : super(key: key);
+  final int userId;
+
+  const MyFriendBooksWidget({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<MyFriendBooksWidget> createState() => _MyFriendBooksWidgetState();
@@ -19,7 +23,6 @@ class MyFriendBooksWidget extends StatefulWidget {
 
 class _MyFriendBooksWidgetState extends State<MyFriendBooksWidget> {
   final title = const Text("Livros de");
-  final addPage = BookFormWidget();
   BookDao? bookDao;
 
   final BookRepository? _repository = BookRepository();
@@ -30,8 +33,8 @@ class _MyFriendBooksWidgetState extends State<MyFriendBooksWidget> {
   @override
   void initState() {
     super.initState();
-    _getBooksById(1);
-    _getUser(1);
+    _getBooksById(widget.userId);
+    _getUser(widget.userId);
   }
 
   _getBooksById(int id) async {
@@ -40,6 +43,16 @@ class _MyFriendBooksWidgetState extends State<MyFriendBooksWidget> {
     setState(() {
       books = result;
     });
+  }
+
+  mostrarDetalhes(Book book, int userId) {
+    print(book.author);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => BooksDescriptionWidget(book: book, userId: userId),
+      ),
+    );
   }
 
   _insertBook(Book book) async {
@@ -99,8 +112,8 @@ class _MyFriendBooksWidgetState extends State<MyFriendBooksWidget> {
           child: ListTile(
               title: Text(book.name),
               subtitle: subTitle(book),
-              onLongPress: () {
-                _deleteBook(book);
+              onTap: () {
+                mostrarDetalhes(book, 0);
               }),
         ));
   }

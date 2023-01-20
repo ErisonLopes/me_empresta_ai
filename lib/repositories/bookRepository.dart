@@ -24,9 +24,9 @@ class BookRepository {
           bookMap[index]['name'],
           bookMap[index]['description'],
           bookMap[index]['author'],
-          bookMap[index]['loan'],
-          bookMap[index]['userId'],
-          bookMap[index]['userLoanId'],
+          bookMap[index]['loan'] as int,
+          bookMap[index]['userId'] as int,
+          bookMap[index]['userLoanId'] as int,
           id: bookMap[index]['id']);
     });
 
@@ -44,9 +44,9 @@ class BookRepository {
           bookMap[index]['name'],
           bookMap[index]['description'],
           bookMap[index]['author'],
-          bookMap[index]['loan'],
-          bookMap[index]['userId'],
-          bookMap[index]['userLoanId'],
+          bookMap[index]['loan'] as int,
+          bookMap[index]['userId'] as int,
+          bookMap[index]['userLoanId'] as int,
           id: bookMap[index]['id']);
     });
 
@@ -64,9 +64,9 @@ class BookRepository {
           bookMap[index]['name'],
           bookMap[index]['description'],
           bookMap[index]['author'],
-          bookMap[index]['loan'],
-          bookMap[index]['userId'],
-          bookMap[index]['userLoanId'],
+          bookMap[index]['loan'] as int,
+          bookMap[index]['userId'] as int,
+          bookMap[index]['userLoanId'] as int,
           id: bookMap[index]['id']);
     });
 

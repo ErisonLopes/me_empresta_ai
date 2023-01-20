@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:me_empresta_ai/models/book.dart';
 import 'package:me_empresta_ai/screens/bookAdd.dart';
+import 'package:me_empresta_ai/screens/homeScreen.dart';
 import 'package:me_empresta_ai/utils/custom_widgets.dart';
 
 import '../repositories/bookRepository.dart';
 
 class BooksDescriptionWidget extends StatefulWidget {
   final Book book;
+  final int userId;
 
-  const BooksDescriptionWidget({Key? key, required this.book})
+  const BooksDescriptionWidget(
+      {Key? key, required this.book, required this.userId})
       : super(key: key);
 
   @override
@@ -27,51 +30,58 @@ class _BooksDescriptionWidgetState extends State<BooksDescriptionWidget> {
     });
   }
 
-  _loanBook() async {
-    if (widget.book != null) {
-      await _repository!.loanBook(widget.book, 1);
-      await _getBooksById(widget.book.id!);
+  _loanBook(Book book) async {
+    if (book != null) {
+      await _repository!.loanBook(book, 1);
+      await _getBooksById(book.id!);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(widget.book.name)),
-        body: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(children: [
-            Padding(
-              padding: EdgeInsets.only(bottom: 24),
+      appBar: AppBar(title: Text(widget.book.name)),
+      body: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(children: [
+          Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(width: 10),
-                  Text(
-                    widget.book.description,
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: -1,
-                      color: Colors.grey[800],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(width: 10),
+                    Text(
+                      widget.book.description,
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: -1,
+                        color: Colors.grey[800],
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.book.author,
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: -1,
-                      color: Colors.grey[800],
+                  ])),
+          Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(width: 10),
+                    Text(
+                      widget.book.author,
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: -1,
+                        color: Colors.grey[800],
+                      ),
                     ),
-                  ),
-                  loanButton()
-                ],
-              ),
-            ),
-          ]),
-        ));
+                  ])),
+          if (widget.userId != widget.book.userId) loanButton(widget.book)
+        ]),
+      ),
+    );
   }
 
   String loan(int loan) {
@@ -81,15 +91,23 @@ class _BooksDescriptionWidgetState extends State<BooksDescriptionWidget> {
     return "disponivel";
   }
 
-  loanButton() {
-    print(widget.book.name);
-    if (widget.book.loan == 0)
-      return ElevatedButton(
-          onPressed: () {
-            _loanBook();
-          },
-          child: loanText);
-
-          return ElevatedButton( onPressed(), child: "Não Disponivel")
+  loanButton(Book book) {
+    if (book.loan == 0) {
+      return Center(
+          child: SizedBox(
+              height: 50, //height of button
+              width: 400, //width of button
+              child: ElevatedButton(
+                  onPressed: () {
+                    _loanBook(book);
+                  },
+                  child: loanText)));
+    } else {
+      return Center(
+          child: SizedBox(
+              height: 50, //height of button
+              width: 400, //width of button
+              child: ElevatedButton(onPressed: null, child: unavailableText)));
+    }
   }
 }

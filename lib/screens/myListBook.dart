@@ -3,6 +3,7 @@ import 'package:me_empresta_ai/floor/daos/book_dao.dart';
 import 'package:me_empresta_ai/models/book.dart';
 import 'package:me_empresta_ai/screens/bookAdd.dart';
 import 'package:me_empresta_ai/screens/booksDescription.dart';
+import 'package:me_empresta_ai/screens/homeScreen.dart';
 import 'package:me_empresta_ai/utils/custom_styles.dart';
 import 'package:me_empresta_ai/utils/custom_widgets.dart';
 
@@ -25,7 +26,7 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
   }
 
   final title = const Text("Meus Livros");
-  final addPage = BookFormWidget();
+
   BookDao? bookDao;
 
   final BookRepository? _repository = BookRepository();
@@ -45,12 +46,11 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
     });
   }
 
-  mostrarDetalhes(Book book) {
-    print(book.author);
+  mostrarDetalhes(Book book, int userId) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => BooksDescriptionWidget(book: book),
+        builder: (_) => BooksDescriptionWidget(book: book, userId: userId),
       ),
     );
   }
@@ -77,9 +77,12 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => addPage))
-                    .then((book) => _insertBook(book));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BookFormWidget(
+                              userId: widget.userId,
+                            ))).then((book) => _insertBook(book));
               },
               icon: addIcon)
         ],
@@ -117,7 +120,7 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
               title: Text(book.name),
               subtitle: subTitle(book),
               onTap: () {
-                mostrarDetalhes(book);
+                mostrarDetalhes(book, widget.userId);
               }),
         ));
   }
