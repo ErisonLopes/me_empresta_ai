@@ -43,13 +43,13 @@ class _HomePageState extends State<HomePage> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: 'Meus livros',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Usuário',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Meus livros',
-          )
         ],
         onTap: (selectedIndex) {
           pc.animateToPage(
