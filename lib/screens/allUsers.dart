@@ -33,11 +33,11 @@ class _AllUsersWidgetState extends State<AllUsersWidget> {
   @override
   void initState() {
     super.initState();
-    _getBooksById();
+    _getBooksById(widget.userId);
   }
 
-  _getBooksById() async {
-    final result = await _repository!.getUsers();
+  _getBooksById(int id) async {
+    final result = await _repository!.getUsers(id);
 
     setState(() {
       users = result;
